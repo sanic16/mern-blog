@@ -1,0 +1,11 @@
+.ql__editor{
+    overflow: scroll;
+    background-color: var(--color-white);
+    height: 10rem;
+}
+
+@media screen and (max-width: 800px){
+    .create__post{
+        width: 100%;
+    }
+}

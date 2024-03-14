@@ -1,0 +1,32 @@
+.login{
+    width: var(--form-width);
+    margin-inline: auto;
+    height: calc(100vh - 12rem);
+    display: grid;
+    place-items: center;
+}
+
+/* .register__container{
+    width: var(--form-width);
+    margin-inline: auto;
+} */
+
+.login h2{
+    margin-bottom: 2rem;
+}
+
+.login small{
+    display: block;
+    margin-top: 1.5rem;
+}
+
+.login small a{
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 800px){
+    .login{
+        width: 100%;
+    }
+}
