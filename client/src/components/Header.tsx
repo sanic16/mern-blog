@@ -4,10 +4,12 @@ import { AiOutlineClose } from 'react-icons/ai'
 import './header.css'
 import { useState } from 'react'
 import { FaBars } from 'react-icons/fa'
+import useContextUser from '../context/userContext'
 
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(window.innerWidth > 800 ? true : false)
+  const { currentUser } = useContextUser()
   const handleCloseMenu = () => {
     if(window.innerWidth < 800){
         setIsMenuOpen(false)

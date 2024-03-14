@@ -1,5 +1,7 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import axios from "axios"
+import useContextUser from "../context/userContext"
 import './login.css'
 
 const Login = () => {
@@ -7,6 +9,11 @@ const Login = () => {
     email: '',
     password: '',
   })
+
+  const [error, setError] = useState('')
+  const navigate = useNavigate()
+
+  const { setUserState } = useContextUser()
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserData({
@@ -16,9 +23,20 @@ const Login = () => {
     console.log(`${e.target.name}: ${e.target.value}`)
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log(userData)
+    setError('')
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/users/login`, userData)
+      const user = response.data
+      if(!user){
+        return setError('Error al iniciar sesión')
+      }
+      setUserState(user)
+      navigate('/')
+    } catch (error: any) {
+      setError(error.response.data.message || error.message)
+    }
   }
 
   return (
@@ -31,9 +49,13 @@ const Login = () => {
           onSubmit={handleSubmit} 
           className="form login__form"
         >
-          <p className="form__error-message">
-            Crendenciales incorrectas
-          </p>
+          {
+            error && (
+            <p className="form__error-message">
+              { error }
+            </p>
+            )
+          }
           
           <input 
             type="email" 

@@ -17,6 +17,7 @@ import Dashboard from './pages/Dashboard.tsx'
 import Logout from './pages/Logout.tsx'
 import CategoryPost from './pages/CategoryPost.tsx'
 import DeletePost from './pages/DeletePost.tsx'
+import { UserContextProvider } from './context/userContext.tsx'
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <UserContextProvider>
+      <RouterProvider router={router} />
+    </UserContextProvider>
   </React.StrictMode>,
 )

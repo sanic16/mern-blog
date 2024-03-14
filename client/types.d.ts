@@ -15,3 +15,15 @@ type AuthorType = {
     posts: number,
 
 }
+
+type User = {
+    token: string,
+    name: string,
+    id: string
+}
+
+type UserContextType = {
+    currentUser: User | null,
+    setUserState: (user: User | null) => void 
+}
+
