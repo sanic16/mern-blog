@@ -9,7 +9,8 @@ const PostItem = (
         category,
         title,
         desc,
-        autorID
+        authorId,
+        createdAt
     }: PostType
 ) => {
   const shortDescription = desc.length > 145 ? desc.substring(0, 145) + '...' : desc  
@@ -32,7 +33,7 @@ const PostItem = (
             </div>   
         </div>
         <div className="post__footer">
-            <PostAuthor authorID={autorID} />
+            <PostAuthor authorID={authorId} createdAt={createdAt} />
             <Link to={`/posts/categories/${category}`} className="btn category">
                 { category }
             </Link>

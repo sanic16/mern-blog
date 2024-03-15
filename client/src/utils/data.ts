@@ -5,36 +5,36 @@ import thumbnail4 from '../assets/images/blog4.jpg'
 
 const posts_data: PostType[] = [
     {
-        id: 1,
+        id: '1',
         thumbnail1: thumbnail1,
         category: 'education',
         title: 'La educación es la base de la sociedad',
         desc: 'La educación es la base de la sociedad, es el pilar fundamental para el desarrollo de un país, es el motor que impulsa el progreso y el bienestar de una nación. La educación es el medio por el cual se transmiten los conocimientos, valores, costumbres y formas de actuar de una sociedad de generación en generación.',
-        autorID: 3
+        authorId: '1'
     },
     {
-        id: 2,
+        id: '2',
         thumbnail1: thumbnail2,
         category: 'technology',
         title: 'La tecnología está transformando nuestras vidas',
         desc: 'La tecnología está transformando nuestras vidas de formas que antes eran difíciles de imaginar. Desde la forma en que nos comunicamos hasta la manera en que trabajamos, la tecnología ha revolucionado la forma en que vivimos.',
-        autorID: 4 
+        authorId: '2'
     },
     {
-        id: 3,
+        id: '3',
         thumbnail1: thumbnail3,
         category: 'health',
         title: 'La importancia de cuidar nuestra salud',
         desc: 'Cuidar nuestra salud es fundamental para disfrutar de una buena calidad de vida. La prevención y el cuidado de nuestro cuerpo y mente son clave para evitar enfermedades y vivir más y mejor.',
-        autorID: 5 
+        authorId: '3'
     },
     {
-        id: 4,
+        id: '4',
         thumbnail1: thumbnail4,
         category: 'science',
         title: 'El avance de la ciencia y la tecnología',
         desc: 'El avance de la ciencia y la tecnología ha sido fundamental para el desarrollo de la humanidad. Desde los descubrimientos en el espacio hasta los avances en medicina, la ciencia y la tecnología continúan transformando nuestro mundo.',
-        autorID: 6 
+        authorId: '4'
     }
 ];
 

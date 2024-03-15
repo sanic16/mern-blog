@@ -16,7 +16,6 @@ const CreatePost = () => {
   const navigation = useNavigate()
 
   useEffect(() => {
-    console.log(currentUser)
     if(!currentUser){
       navigation('/login')
     }

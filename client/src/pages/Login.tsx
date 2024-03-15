@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import axios from "axios"
 import useContextUser from "../context/userContext"
 import './login.css'
+import { useLoginMutation } from "../store/usersApiSlice"
 
 const Login = () => {
   const [userData, setUserData] = useState({
@@ -10,33 +10,32 @@ const Login = () => {
     password: '',
   })
 
-  const [error, setError] = useState('')
   const navigate = useNavigate()
 
   const { setUserState } = useContextUser()
+
+  const [login, {error, isLoading}] = useLoginMutation()
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserData({
       ...userData,
       [e.target.name]: e.target.value
     })
-    console.log(`${e.target.name}: ${e.target.value}`)
+    // console.log(`${e.target.name}: ${e.target.value}`)
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async  (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setError('')
     try {
-      const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/users/login`, userData)
-      const user = response.data
-      if(!user){
-        return setError('Error al iniciar sesión')
+      const res = await login(userData).unwrap()
+      if(res){
+        setUserState(res)
+        navigate('/')
       }
-      setUserState(user)
-      navigate('/')
-    } catch (error: any) {
-      setError(error.response.data.message || error.message)
+    } catch (error) {
+      console.log('error\t', error)
     }
+    
   }
 
   return (
@@ -51,9 +50,9 @@ const Login = () => {
         >
           {
             error && (
-            <p className="form__error-message">
-              { error }
-            </p>
+              <p className="form__error-message">
+                { 'data' in error ? ('message' in (error.data as {message: string}) ? (error.data as {message: string}).message : 'Error') : 'Error'}
+              </p>
             )
           }
           
@@ -73,12 +72,25 @@ const Login = () => {
             onChange={handleInputChange}
           />
           
-          <button 
-            type="submit" 
-            className="btn primary"
-          >
-            Iniciar sesión
-          </button>
+          {
+            isLoading ? (
+              <button
+                className="btn primary"
+                disabled
+              >
+                Iniciando sesión...
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="btn primary"
+              >
+                Iniciar sesión
+              </button>
+            
+            ) 
+            
+          }
         </form>
         <small>
           ¿No tienes cuenta? <Link to="/register">Regístrate</Link>

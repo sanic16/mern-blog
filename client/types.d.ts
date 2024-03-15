@@ -1,10 +1,11 @@
 type PostType = {
-    id: number,
+    id: string,
     thumbnail1: string,
     category: string,
     title: string,
     desc: string,
-    autorID: number
+    authorId: string
+    createdAt: string
 }
 
 type AuthorType = {
@@ -27,3 +28,22 @@ type UserContextType = {
     setUserState: (user: User | null) => void 
 }
 
+type FetchedPosts = {
+    "posts": {
+          "_id": string
+          "title": string
+          "category": string
+          "description": string
+          "creator": string 
+          "thumbnail": string
+          "createdAt": string
+          "updatedAt": string
+        } []      
+}
+
+type RegisterUser = {
+    name: string,
+    email: string,
+    password: string,
+    password2: string
+}

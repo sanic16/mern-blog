@@ -1,14 +1,25 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import './createPost.css'
 import { formats, modules, post_categories } from '../utils/data'
+import { useNavigate } from 'react-router-dom'
+import useContextUser from '../context/userContext'
 
 const EditPost = () => {
   const [title, setTitle] = useState('')
   const [category, setCategory] = useState('Uncategorized')
   const [description, setDescription] = useState('')
   const [thumbnail, setThumbnail] = useState<string | ArrayBuffer | null>('')
+
+  const navigation = useNavigate()
+  const { currentUser } = useContextUser()
+
+  useEffect(() => {
+    if(!currentUser){
+      navigation('/login')
+    }
+  }, [currentUser, navigation])
 
   const handleUploadThumbnail = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {

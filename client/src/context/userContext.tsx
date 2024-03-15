@@ -12,20 +12,20 @@ export const UserContextProvider = (
         children: React.ReactNode
     }
 ) => {
-    const [currentUser, setCurrentUser] = useState<User | null>(null)
+    const [currentUser, setCurrentUser] = useState<User | null>(JSON.parse(localStorage.getItem('user') || '{}'))
     const setUserState = (user: User | null) => {
         setCurrentUser(user)
     }
-    useEffect(() => {
-        const user = JSON.parse(localStorage.getItem('user') || '{}') 
-        if(user){
-            setCurrentUser(user)
-        }
+    // useEffect(() => {
         
-    }, [])
+    //     const user = JSON.parse(localStorage.getItem('user') || '{}') 
+    //     if(user){
+    //         setCurrentUser(user)
+    //     }
+        
+    // }, [])
 
     useEffect(() => {
-        console.log('I run three times in the beginning')
         localStorage.setItem('user', JSON.stringify(currentUser))
     }, [currentUser])
 

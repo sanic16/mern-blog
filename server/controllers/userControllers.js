@@ -92,6 +92,7 @@ const getUser = async(req, res, next) => {
 // PROTECTED
 const changeAvatar = async(req, res, next) => {
     try {
+
         if(!req.files.avatar){
             return next(new HttpError('Please choose an image', 422))
         }
@@ -99,7 +100,7 @@ const changeAvatar = async(req, res, next) => {
         // find user from database
         const user = await User.findById(req.user.id)
         // delete old avatar if it exists
-        if(user.avatar){
+        if(user.avatar && user.avatar !== 'default.jpg'){
             fs.unlink(path.join(__dirname, '..', 'uploads', user.avatar), (error) => {
                 if(error) {
                     return next(new HttpError(error))
@@ -124,7 +125,7 @@ const changeAvatar = async(req, res, next) => {
             }
         })
 
-        const updatedAvatar = await User.findByIdAndUpdate('65edef8d9b795191196859e0', {avatar: newFileName}, {new: true})
+        const updatedAvatar = await User.findByIdAndUpdate(user._id, {avatar: newFileName}, {new: true})
         if(!updatedAvatar){
             return next(new HttpError('Avatar couldn\'t be updated', 422))
         }
