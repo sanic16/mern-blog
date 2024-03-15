@@ -26,7 +26,7 @@ const Header = () => {
             </Link>
 
             {
-                isMenuOpen && (
+               currentUser ? (isMenuOpen && (
                     <ul className="nav__menu">
                         <li>
                             <Link to={'/profile/julius'} onClick={handleCloseMenu}>
@@ -49,8 +49,23 @@ const Header = () => {
                             </Link>
                         </li>
                     </ul>
-                )
+                )) : (isMenuOpen && (
+                        <ul className="nav__menu">
+                            <li>
+                            <Link to={'/authors'} onClick={handleCloseMenu}>
+                                Autores
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to={'/login'} onClick={handleCloseMenu}>
+                                Iniciar Sesión 
+                            </Link>
+                        </li>
+                        </ul>
+                ))
             }
+
+
 
             <button className="nav__toggle-btn" onClick={() => setIsMenuOpen(prev => !prev)}>
                 {isMenuOpen ? <AiOutlineClose /> : <FaBars />} 

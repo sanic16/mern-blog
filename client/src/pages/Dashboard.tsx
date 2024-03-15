@@ -1,10 +1,21 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { posts_data } from "../utils/data"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import useContextUser from "../context/userContext"
 import './dashboard.css'
 
 const Dashboard = () => {
   const [posts] = useState<PostType[]>(posts_data)
+
+  const { currentUser } = useContextUser()
+  const navigation = useNavigate()
+
+  useEffect(() => {
+    console.log(currentUser)
+    if(!currentUser){
+      navigation('/login')
+    }
+  }, [currentUser, navigation])
 
   return (
     <section className="dashboard">

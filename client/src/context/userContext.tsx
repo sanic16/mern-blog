@@ -18,10 +18,14 @@ export const UserContextProvider = (
     }
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user') || '{}') 
-        setCurrentUser(user)
+        if(user){
+            setCurrentUser(user)
+        }
+        
     }, [])
 
     useEffect(() => {
+        console.log('I run three times in the beginning')
         localStorage.setItem('user', JSON.stringify(currentUser))
     }, [currentUser])
 

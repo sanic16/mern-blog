@@ -1,14 +1,26 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import './createPost.css'
 import { formats, modules, post_categories } from '../utils/data'
+import useContextUser from '../context/userContext'
+import { useNavigate } from 'react-router-dom'
 
 const CreatePost = () => {
   const [title, setTitle] = useState('')
   const [category, setCategory] = useState('Uncategorized')
   const [description, setDescription] = useState('')
   const [thumbnail, setThumbnail] = useState<string | ArrayBuffer | null>('')
+
+  const { currentUser } = useContextUser()
+  const navigation = useNavigate()
+
+  useEffect(() => {
+    console.log(currentUser)
+    if(!currentUser){
+      navigation('/login')
+    }
+  }, [currentUser, navigation])
 
   const handleUploadThumbnail = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -21,6 +33,10 @@ const CreatePost = () => {
       }
       reader.readAsDataURL(file)
     }
+    console.log(thumbnail)
+  }
+  if (!currentUser) {
+    return null
   }
 
   return (

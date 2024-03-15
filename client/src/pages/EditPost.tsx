@@ -21,6 +21,7 @@ const EditPost = () => {
       }
       reader.readAsDataURL(file)
     }
+    console.log(thumbnail)
   }
 
   return (
