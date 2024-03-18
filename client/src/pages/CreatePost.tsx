@@ -5,35 +5,52 @@ import './createPost.css'
 import { formats, modules, post_categories } from '../utils/data'
 import useContextUser from '../context/userContext'
 import { useNavigate } from 'react-router-dom'
+import { useCreatePostMutation } from '../store/postsApiSlice'
 
 const CreatePost = () => {
-  const [title, setTitle] = useState('')
-  const [category, setCategory] = useState('Uncategorized')
-  const [description, setDescription] = useState('')
-  const [thumbnail, setThumbnail] = useState<string | ArrayBuffer | null>('')
-
-  const { currentUser } = useContextUser()
   const navigation = useNavigate()
-
+  const { currentUser } = useContextUser()
   useEffect(() => {
     if(!currentUser){
       navigation('/login')
     }
   }, [currentUser, navigation])
 
-  const handleUploadThumbnail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const file = e.target.files[0]
-      const reader = new FileReader()
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setThumbnail(reader.result)
-        }
-      }
-      reader.readAsDataURL(file)
+  const [title, setTitle] = useState('')
+  const [category, setCategory] = useState('Uncategorized')
+  const [description, setDescription] = useState('')
+  const [thumbnail, setThumbnail] = useState<File | null>(null)
+
+ 
+  const [
+    createPost,
+    { isLoading }
+  ] = useCreatePostMutation()
+
+  const handleThumbnail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files
+    if(file){
+      setThumbnail(file[0])
     }
-    console.log(thumbnail)
   }
+  
+
+  const handleCreatePost = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()   
+    const formData = new FormData()
+    formData.append('title', title)
+    formData.append('category', category)
+    formData.append('description', description)
+    thumbnail && formData.append('thumbnail', thumbnail)
+    try {
+      const response = await createPost(formData).unwrap()
+      console.log(response)
+
+    } catch (error) {
+      console.log(error)
+    }
+  } 
+
   if (!currentUser) {
     return null
   }
@@ -47,23 +64,40 @@ const CreatePost = () => {
         <p className="form__error-message">
           Error al crear el post
         </p>
-        <form className="form crate__post-form">
+        <form className="form crate__post-form" onSubmit={handleCreatePost}>
           <input type="text" placeholder='Título' value={title} onChange={e => setTitle(e.target.value)} autoFocus/>
-          <select value={category} onChange={e => setCategory(e.target.value)}>
+          <select value={category} onChange={e => {
+            setCategory(e.target.value)
+            console.log(e.target.value)
+          }}>
            {
             post_categories.map(category => (
-              <option key={category}>
-                {category}
+              <option key={category.value} value={category.value}>
+                {category.name}
               </option>
             ))
            }
           </select>
           <ReactQuill modules={modules} formats={formats} value={description} onChange={setDescription} placeholder='Escribe algo...' className='ql__editor'/>
-          <input type="file" onChange={handleUploadThumbnail} accept='png, jpg, jpeg'/>
-          {/* <img src={thumbnail ? thumbnail.toString() : ''} alt="Thumbnail" className='thumbnail'/> */}
-          <button type="submit" className='btn primary'>
-            Crear Post 
-          </button>
+          <input type="file" onChange={handleThumbnail} accept='png, jpg, jpeg'/>
+          {
+            !isLoading ? (
+              <button 
+                type="submit" 
+                className='btn primary'
+              >
+                Crear Post 
+              </button>
+            ):(
+              <button 
+                type="submit" 
+                className='btn primary'
+                disabled
+              >
+                Creando Post...
+              </button>
+            )
+          }
         </form>
       </div>
     </section>

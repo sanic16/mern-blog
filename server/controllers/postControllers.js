@@ -52,7 +52,7 @@ const createPost = async(req, res, next) => {
                 await newPost.save()
 
                 res.status(201).json({
-                    post: newPost,
+                    message: 'Post created successfully'
                 })
             }
         })
@@ -103,9 +103,9 @@ const getPost = async(req, res, next) => {
 const getCatPosts = async(req, res, next) => {
     try {
        const { id: category } = req.params
-       const catPosts = await Post.find({category}).select('-__v').sort({updatedAt: -1})
+       const posts = await Post.find({category}).select('-__v').sort({updatedAt: -1})
        return res.status(200).json({
-              catPosts
+              posts
        }) 
     } catch (error) {
         return next(new HttpError(error))
@@ -117,9 +117,9 @@ const getCatPosts = async(req, res, next) => {
 const getUserPosts = async(req, res, next) => {
     try {
         const { id: userId } = req.params
-        const userPosts = await Post.find({creator: userId}).select('-__v').sort({updatedAt: -1})
+        const posts = await Post.find({creator: userId}).select('-__v').sort({updatedAt: -1})
         return res.status(200).json({
-            userPosts
+            posts
         })
     } catch (error) {
         return next(new HttpError(error))
@@ -182,7 +182,7 @@ const editPost = async (req, res, next) => {
 
             updatedPost = await Post.findByIdAndUpdate(postId, {title, category, description, thumbnail: newFilename}, {new: true})
             return res.status(200).json({
-                updatedPost
+                message: 'Post updated successfully',
             })
         }
     } catch (error) {
@@ -218,7 +218,7 @@ const deletePost = async(req, res, next) => {
             }
         })
         res.status(200).json({
-            message: `Post with id: ${postId} delete successfully`
+            message: 'Post deleted successfully'
         })
     } catch (error) {
         return next(new HttpError(error))

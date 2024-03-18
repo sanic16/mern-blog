@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { posts_data } from "../utils/data"
 import { Link, useNavigate } from "react-router-dom"
 import useContextUser from "../context/userContext"
+import { useGetPostsByAuthorQuery } from "../store/postsApiSlice"
 import './dashboard.css'
 
 const Dashboard = () => {
@@ -9,6 +10,10 @@ const Dashboard = () => {
 
   const { currentUser } = useContextUser()
   const navigation = useNavigate()
+
+  const { data } = useGetPostsByAuthorQuery(currentUser?.id || '0')
+
+
 
   useEffect(() => {
     if(!currentUser){
@@ -22,24 +27,24 @@ const Dashboard = () => {
         posts.length ? (
           <div className="container dashboard__container">
             {
-              posts.map(post => (
-                <article key={post.id} className="dashboard__post">
+              data?.posts.map(post => (
+                <article key={post._id} className="dashboard__post">
                   <div className="dashboard__post-info">
                     <div className="dashboard__post-thumbnail">
-                      <img src={post.thumbnail1} alt="" />
+                      <img src={post.thumbnail} alt="" />
                     </div>
                     <h5>
                       {post.title}
                     </h5>
                   </div>
                   <div className="dashboard__post-actions">
-                    <Link to={`/posts/${post.id}`} className="btn sm">
+                    <Link to={`/posts/${post._id}`} className="btn sm">
                       Ver Post
                     </Link>
-                    <Link to={`/posts/${post.id}/edit`} className="btn sm primary">
+                    <Link to={`/posts/${post._id}/edit?id=${post._id}`} className="btn sm primary">
                       Editar
                     </Link>
-                    <Link to={`/posts/${post.id}/delete`} className="btn sm danger">
+                    <Link to={`/posts/${post._id}/delete?id=${post._id}`} className="btn sm danger">
                       Eliminar
                     </Link>
 

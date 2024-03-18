@@ -71,13 +71,26 @@ const loginUser = async(req, res, next) => {
     }
 } 
 
-// ========================= USER PROFILE
-// POST: api/users/:id
+// ========================= GET PROFILE
+// GET: api/users/profile
 // PROTECTED
+const getProfile = async(req, res, next) => {
+    console.log('hi')
+    try {
+        const user = await User.findById(req.user.id).select('-password -__v')
+        return res.status(200).json(user)
+    } catch (error) {
+        return next(new HttpError(error))
+    }
+}
+
+// ========================= GET USER DETAILS
+// GET: api/users/:id
+// UNPROTECTED
 const getUser = async(req, res, next) => {
     try {
         const { id } = req.params
-        const user = await User.findById(id).select('-password')
+        const user = await User.findById(id).select('-password -__v')
         if(!user){
             return next(new HttpError('User not found', 404))
         }
@@ -130,7 +143,7 @@ const changeAvatar = async(req, res, next) => {
             return next(new HttpError('Avatar couldn\'t be updated', 422))
         }
 
-        res.status(200).json(updatedAvatar)
+        res.status(200).json('Avatar updated')
 
     } catch (error) {
         return next(new HttpError(error))
@@ -188,7 +201,7 @@ const editUser = async(req, res, next) => {
 // UNPROTECTED
 const getAuthors = async(req, res, next) => {
     try {
-        const authors = await User.find().select('-password')
+        const authors = await User.find().select('-password').select('-__v')
         res.json(authors)
     } catch (error) {
         return next(new HttpError(error))
@@ -201,6 +214,7 @@ module.exports = {
     getUser,
     changeAvatar,
     editUser,
-    getAuthors
+    getAuthors,
+    getProfile
 }
 

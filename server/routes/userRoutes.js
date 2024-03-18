@@ -7,15 +7,17 @@ const {
     getUser,
     changeAvatar,
     editUser,
-    getAuthors
+    getAuthors,
+    getProfile
 } = require('../controllers/userControllers')
 
 const router = Router()
 
+router.get('/', getAuthors)
 router.post('/register', registerUser)
 router.post('/login', loginUser)
+router.get('/profile', authMiddleware, getProfile)
 router.get('/:id', getUser)
-router.get('/', getAuthors)
 router.post('/change-avatar', authMiddleware, changeAvatar)
 router.patch('/edit-user',authMiddleware, editUser)
 

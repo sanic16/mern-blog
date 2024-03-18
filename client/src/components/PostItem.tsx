@@ -4,36 +4,37 @@ import './postItem.css'
 
 const PostItem = (
     {
-        id,
-        thumbnail1,
+        _id,
+        thumbnail,
         category,
         title,
-        desc,
-        authorId,
+        description,
+        creator,
         createdAt
-    }: PostType
+    }: Post
 ) => {
-  const shortDescription = desc.length > 145 ? desc.substring(0, 145) + '...' : desc  
-  const postTile = title.length > 50 ? title.substring(0, 30) + '...' : title
+  const shortDescription = description.length > 145 ? description.substring(0, 145) + '...' : description  
+  const postTitle = title.length > 50 ? title.substring(0, 30) + '...' : title
   return (
     <article className="post">
         <div>
             <div className="post__thumbnail">
-                <img src={thumbnail1} alt={title} />
+                <img src={thumbnail} alt={title} />
             </div>
             <div className="post__content">
-                <Link to={`/posts/${id}`}>
+                <Link to={`/posts/${_id}`}>
                     <h3>
-                        { postTile }
+                        { postTitle }
                     </h3>
                 </Link>
-                <p>
-                    { shortDescription }
+                <p 
+                    dangerouslySetInnerHTML={{__html: shortDescription  }}
+                >
                 </p>
             </div>   
         </div>
         <div className="post__footer">
-            <PostAuthor authorID={authorId} createdAt={createdAt} />
+            <PostAuthor authorID={creator} createdAt={createdAt} />
             <Link to={`/posts/categories/${category}`} className="btn category">
                 { category }
             </Link>

@@ -29,8 +29,8 @@ const Header = () => {
                currentUser ? (isMenuOpen && (
                     <ul className="nav__menu">
                         <li>
-                            <Link to={'/profile/julius'} onClick={handleCloseMenu}>
-                                Julius Marroquín
+                            <Link to={`/profile`} onClick={handleCloseMenu}>
+                                { currentUser.name }
                             </Link>
                         </li>
                         <li>

@@ -47,3 +47,44 @@ type RegisterUser = {
     password: string,
     password2: string
 }
+
+type Author = {
+    _id: string,
+    name: string,
+    avatar: string,
+    email: string,
+    posts: number,
+}
+
+type UpdateProfile = {
+    name: string,
+    email: string,
+    currentPassword: string,
+    newPassword: string,
+    confirmNewPassword: string
+}
+
+type Post = {
+    _id: string,
+    title: string,
+    category: string,
+    description: string,
+    creator: string,
+    thumbnail: string,
+    createdAt: string,
+}
+
+type Posts = {
+    posts: Post[]
+}
+
+type PostCreate = {
+    title: string,
+    category: string,
+    description: string,
+    thumbnail?: FormData,
+}
+
+type PostSingle = {
+    post: Post
+}

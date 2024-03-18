@@ -10,7 +10,8 @@ const posts_data: PostType[] = [
         category: 'education',
         title: 'La educación es la base de la sociedad',
         desc: 'La educación es la base de la sociedad, es el pilar fundamental para el desarrollo de un país, es el motor que impulsa el progreso y el bienestar de una nación. La educación es el medio por el cual se transmiten los conocimientos, valores, costumbres y formas de actuar de una sociedad de generación en generación.',
-        authorId: '1'
+        authorId: '1',
+        createdAt: '2021-09-01'
     },
     {
         id: '2',
@@ -18,7 +19,8 @@ const posts_data: PostType[] = [
         category: 'technology',
         title: 'La tecnología está transformando nuestras vidas',
         desc: 'La tecnología está transformando nuestras vidas de formas que antes eran difíciles de imaginar. Desde la forma en que nos comunicamos hasta la manera en que trabajamos, la tecnología ha revolucionado la forma en que vivimos.',
-        authorId: '2'
+        authorId: '2',
+        createdAt: '2021-09-01'
     },
     {
         id: '3',
@@ -26,7 +28,8 @@ const posts_data: PostType[] = [
         category: 'health',
         title: 'La importancia de cuidar nuestra salud',
         desc: 'Cuidar nuestra salud es fundamental para disfrutar de una buena calidad de vida. La prevención y el cuidado de nuestro cuerpo y mente son clave para evitar enfermedades y vivir más y mejor.',
-        authorId: '3'
+        authorId: '3',
+        createdAt: '2021-09-01'
     },
     {
         id: '4',
@@ -34,7 +37,8 @@ const posts_data: PostType[] = [
         category: 'science',
         title: 'El avance de la ciencia y la tecnología',
         desc: 'El avance de la ciencia y la tecnología ha sido fundamental para el desarrollo de la humanidad. Desde los descubrimientos en el espacio hasta los avances en medicina, la ciencia y la tecnología continúan transformando nuestro mundo.',
-        authorId: '4'
+        authorId: '4',
+        createdAt: '2021-09-01'
     }
 ];
 
@@ -73,17 +77,31 @@ const author_data: AuthorType[] = [
         posts: 25
     }
 ]
-
-const post_categories = [
-    "Agricultura",
-    "Negocios",
-    "Educación",
-    "Entretenimiento",
-    "Arte",
-    "Investigación",
-    "Sin categoría",
-    "Tiempo"
+const categories =[
+    "Agriculture",
+    "Business",
+    "Education",
+    "Entertainment",
+    "Art",
+    "Investment",
+    "Uncategorized",
+    "Weather"
 ]
+const post_categories: {name: string, value?: string}[] = [
+    {name:"Agricultura"},
+    {name:"Negocios"},
+    {name:"Educación"},
+    {name:"Entretenimiento"},
+    {name:"Arte"},
+    {name:"Investigación"},
+    {name:"Sin categoría"},
+    {name:"Tiempo"}
+]
+
+for(let i=0; i<categories.length; i++){
+    post_categories[i] = {...post_categories[i], value: categories[i]}
+}
+
 
 const formats = [
     'header', 

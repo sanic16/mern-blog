@@ -18,8 +18,8 @@ import Logout from './pages/Logout.tsx'
 import CategoryPost from './pages/CategoryPost.tsx'
 import DeletePost from './pages/DeletePost.tsx'
 import { UserContextProvider } from './context/userContext.tsx'
-import { ApiProvider } from '@reduxjs/toolkit/query/react'
-import { api } from './store/apiSlice.ts'
+import { Provider } from 'react-redux'
+import store from './store/store.ts'
 
 const router = createBrowserRouter([
   {
@@ -31,12 +31,12 @@ const router = createBrowserRouter([
     {path: 'posts/:id', element: <PostDetail />},
     {path: 'register', element: <Register />},
     {path: 'login', element: <Login />},
-    {path: 'profile/:id', element: <UserProfile />},
+    {path: 'profile', element: <UserProfile />},
     {path: 'authors', element: <Authors />},
     {path: 'create', element: <CreatePost />},
     {path: 'posts/categories/:category', element: <CategoryPost />},
     {path: 'posts/users/:id', element: <AuthorPosts />},
-    {path: 'myposts/:id', element: <Dashboard />},
+    {path: 'myposts', element: <Dashboard />},
     {path: 'posts/:id/edit', element: <EditPost />},
     {path: 'posts/:id/delete', element: <DeletePost />},
     {path: 'logout', element: <Logout />},
@@ -47,9 +47,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <UserContextProvider>
-      <ApiProvider api={api}>
+      <Provider store={store}>
         <RouterProvider router={router} />
-      </ApiProvider>
+      </Provider>
     </UserContextProvider>
   </React.StrictMode>,
 )
