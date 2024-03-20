@@ -10,11 +10,12 @@ const Register = () => {
     password: '',
     password2: ''
   })
+  const [error, setError] = useState('')
 
   const navigate = useNavigate()
   const [
     register,
-    { isLoading, error}
+    { isLoading }
   ] = useRegisterMutation()
 
 
@@ -33,8 +34,16 @@ const Register = () => {
       if (res) {
         navigate('/login')
       }
-    } catch (error) {
-      console.log('error\t', error)
+    } catch (error: unknown) {
+      if(error instanceof Object){
+        if('data' in error){
+          if('message' in (error as {data: {message: string}}).data){
+            return setError((error as {data: {message: string}}).data.message)
+          }
+        }
+      }
+      
+      setError('Error al registrar el usuario')
     }
     
   }
@@ -53,7 +62,7 @@ const Register = () => {
           {
             error && (
               <p className="form__error-message">
-                { 'data' in error ? ('message' in (error.data as {message: string}) ? (error.data as {message: string}).message : 'Error') : 'Error'}
+                {error}
               </p>
             )
           }

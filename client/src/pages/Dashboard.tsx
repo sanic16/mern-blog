@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { posts_data } from "../utils/data"
 import { Link, useNavigate } from "react-router-dom"
 import useContextUser from "../context/userContext"
-import { useGetPostsByAuthorQuery } from "../store/postsApiSlice"
+import { useGetPostsByAuthorQuery, useDeletePostMutation } from "../store/postsApiSlice"
 import './dashboard.css'
 
 const Dashboard = () => {
@@ -12,7 +12,7 @@ const Dashboard = () => {
   const navigation = useNavigate()
 
   const { data } = useGetPostsByAuthorQuery(currentUser?.id || '0')
-
+  const [deletePost] = useDeletePostMutation()
 
 
   useEffect(() => {
@@ -44,9 +44,16 @@ const Dashboard = () => {
                     <Link to={`/posts/${post._id}/edit?id=${post._id}`} className="btn sm primary">
                       Editar
                     </Link>
-                    <Link to={`/posts/${post._id}/delete?id=${post._id}`} className="btn sm danger">
+                    <button 
+                      className="btn sm danger"
+                      onClick={() => {
+                        deletePost(post._id)
+                        console.log('delete')
+                      }
+                      }
+                    >
                       Eliminar
-                    </Link>
+                    </button>
 
                   </div>
                 </article>

@@ -43,10 +43,12 @@ const CreatePost = () => {
     formData.append('description', description)
     thumbnail && formData.append('thumbnail', thumbnail)
     try {
+      console.log(formData)
       const response = await createPost(formData).unwrap()
       console.log(response)
 
     } catch (error) {
+      console.log('error')
       console.log(error)
     }
   } 

@@ -16,7 +16,6 @@ import AuthorPosts from './pages/AuthorPosts.tsx'
 import Dashboard from './pages/Dashboard.tsx'
 import Logout from './pages/Logout.tsx'
 import CategoryPost from './pages/CategoryPost.tsx'
-import DeletePost from './pages/DeletePost.tsx'
 import { UserContextProvider } from './context/userContext.tsx'
 import { Provider } from 'react-redux'
 import store from './store/store.ts'
@@ -38,7 +37,6 @@ const router = createBrowserRouter([
     {path: 'posts/users/:id', element: <AuthorPosts />},
     {path: 'myposts', element: <Dashboard />},
     {path: 'posts/:id/edit', element: <EditPost />},
-    {path: 'posts/:id/delete', element: <DeletePost />},
     {path: 'logout', element: <Logout />},
    ]
   }

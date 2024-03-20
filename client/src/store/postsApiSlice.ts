@@ -7,22 +7,22 @@ const postsApiSlice = api.injectEndpoints({
                 url: '/posts',
                 method: 'GET'
             }),  
-            transformResponse: (response: Posts) => {
-                return{
-                    posts: response.posts.map(post => {
-                        return {
-                            _id: post._id,
-                            title: post.title,
-                            category: post.category,
-                            description: post.description,
-                            thumbnail: `${import.meta.env.VITE_SERVER_STATIC}/${post.thumbnail}`,
-                            creator: post.creator,
-                            createdAt: post.createdAt,
-                        }
+            // transformResponse: (response: Posts) => {
+            //     return{
+            //         posts: response.posts.map(post => {
+            //             return {
+            //                 _id: post._id,
+            //                 title: post.title,
+            //                 category: post.category,
+            //                 description: post.description,
+            //                 thumbnail: `${import.meta.env.VITE_SERVER_STATIC}/${post.thumbnail}`,
+            //                 creator: post.creator,
+            //                 createdAt: post.createdAt,
+            //             }
 
-                    })
-                }
-            },
+            //         })
+            //     }
+            // },
             providesTags: ['Posts'],        
         }),
         getPostsByCategory: builder.query<Posts, string>({
@@ -30,22 +30,22 @@ const postsApiSlice = api.injectEndpoints({
                 url: `/posts/categories/${category}`,
                 method: 'GET'
             }),
-            transformResponse: (response: Posts) => {
-                return{
-                    posts: response.posts.map(post => {
-                        return {
-                            _id: post._id,
-                            title: post.title,
-                            category: post.category,
-                            description: post.description,
-                            thumbnail: `${import.meta.env.VITE_SERVER_STATIC}/${post.thumbnail}`,
-                            creator: post.creator,
-                            createdAt: post.createdAt,
-                        }
+            // transformResponse: (response: Posts) => {
+            //     return{
+            //         posts: response.posts.map(post => {
+            //             return {
+            //                 _id: post._id,
+            //                 title: post.title,
+            //                 category: post.category,
+            //                 description: post.description,
+            //                 thumbnail: `${import.meta.env.VITE_SERVER_STATIC}/${post.thumbnail}`,
+            //                 creator: post.creator,
+            //                 createdAt: post.createdAt,
+            //             }
 
-                    })
-                }
-            },
+            //         })
+            //     }
+            // },
             providesTags: ['CategoryPosts']     
         }),
         getPostsByAuthor: builder.query<Posts, string>({
@@ -54,21 +54,21 @@ const postsApiSlice = api.injectEndpoints({
                 method: 'GET'
             }),
             providesTags: ['AuthorPosts'],
-            transformResponse: (response: Posts) => {
-                return{
-                    posts: response.posts.map(post => {
-                        return {
-                            _id: post._id,
-                            title: post.title,
-                            category: post.category,
-                            description: post.description,
-                            thumbnail: `${import.meta.env.VITE_SERVER_STATIC}/${post.thumbnail}`,
-                            creator: post.creator,
-                            createdAt: post.createdAt,
-                        }
-                    })
-                }
-            },
+            // transformResponse: (response: Posts) => {
+            //     return{
+            //         posts: response.posts.map(post => {
+            //             return {
+            //                 _id: post._id,
+            //                 title: post.title,
+            //                 category: post.category,
+            //                 description: post.description,
+            //                 thumbnail: `${import.meta.env.VITE_SERVER_STATIC}/${post.thumbnail}`,
+            //                 creator: post.creator,
+            //                 createdAt: post.createdAt,
+            //             }
+            //         })
+            //     }
+            // },
             
         }),
         createPost: builder.mutation<string, FormData>({
@@ -77,7 +77,7 @@ const postsApiSlice = api.injectEndpoints({
                 method: 'POST',
                 body: body
             }),
-            invalidatesTags: ['Posts', 'Authors', 'Profile']
+            invalidatesTags: ['Posts', 'Authors', 'Profile', 'CategoryPosts', 'AuthorPosts']
 
         }),
         getPost: builder.query<PostSingle, string>({
@@ -85,24 +85,22 @@ const postsApiSlice = api.injectEndpoints({
                 url: `/posts/${id}`,
                 method: 'GET'
             }),
-            transformResponse: (response: PostSingle) => {
-                return{
-                    post: {
-                        _id: response.post._id,
-                        title: response.post.title,
-                        category: response.post.category,
-                        description: response.post.description,
-                        thumbnail: `${import.meta.env.VITE_SERVER_STATIC}/${response.post.thumbnail}`,
-                        creator: response.post.creator,
-                        createdAt: response.post.createdAt,
-                    }
-                }
+            // transformResponse: (response: PostSingle) => {
+            //     return{
+            //         post: {
+            //             _id: response.post._id,
+            //             title: response.post.title,
+            //             category: response.post.category,
+            //             description: response.post.description,
+            //             thumbnail: `${import.meta.env.VITE_SERVER_STATIC}/${response.post.thumbnail}`,
+            //             creator: response.post.creator,
+            //             createdAt: response.post.createdAt,
+            //         }
+            //     }
             
-            },
-            providesTags: (result, error, id) => {
-                if(error || !result){
-                    return [{type: 'Post', id}]
-                }
+            // },
+            providesTags: (_result, _error, id) => {
+                
                 return [{type: 'Post', id}]
             }
 
